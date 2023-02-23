@@ -20,28 +20,11 @@ class App extends React.Component {
         }
     }
     componentDidMount() {
-        const users = [
-            // {
-            //     'username': 'User1',
-            //     'first_name': 'Ivan',
-            //     'last_name': 'Ivanov',
-            //     'email': 'Ivan@gmail.com'
-            // },
-            // {
-            //     'username': 'User2',
-            //     'first_name': 'Boris',
-            //     'last_name': 'Petrovich',
-            //     'email': 'Boris@gmail.com'
-            // },
 
 
-        ]
-        const projects = []
-        const todos = []
-
-        axios.get('http://127.0.0.1:8000/api/users')
+        axios.get('http://127.0.0.1:8000/api/users/')
             .then(response => {
-                const users = response.data
+                const users = response.data.results
                 this.setState(
                     {
                         'users': users
@@ -51,9 +34,9 @@ class App extends React.Component {
 
             })
 
-        axios.get('http://127.0.0.1:8000/api/projects')
+        axios.get('http://127.0.0.1:8000/api/projects/')
         .then(response => {
-            const projects = response.data
+            const projects = response.data.results
             this.setState(
                 {
                     'projects': projects
@@ -63,9 +46,10 @@ class App extends React.Component {
 
         })
 
-        axios.get('http://127.0.0.1:8000/api/todos')
+        axios.get('http://127.0.0.1:8000/api/todos/')
             .then(response => {
-                const todos = response.data
+                const todos = response.data.results
+                console.dir(response.data)
                 this.setState(
                     {
                         'todos': todos
@@ -78,12 +62,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <Footer/>
-                <Menu/>
                 <BrowserRouter>
                     <nav>
                         <ul>
                             <Link to='/'>Users</Link>
+                            <a href='projects'>fff</a>
                         </ul>
                         <ul>
                             <Link to='/projects'>Projects</Link>

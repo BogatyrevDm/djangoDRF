@@ -66,7 +66,6 @@ class App extends React.Component {
                     <nav>
                         <ul>
                             <Link to='/'>Users</Link>
-                            <a href='projects'>fff</a>
                         </ul>
                         <ul>
                             <Link to='/projects'>Projects</Link>

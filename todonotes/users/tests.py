@@ -3,19 +3,26 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APITestCase
 from mixer.backend.django import mixer
 
-from user.views import UserCustomViewSet
+from users.views import UserCustomViewSet
 from users.models import User
 
 
 
-class TestUserViewSet():
+class TestUserViewSet(TestCase):
     def setUp(self)->None:
         self.name = 'admin'
         self.password = 'admin_123'
         self.email = 'admin_123@mail.ru'
         self.data = {'username':'Sergey', 'first_name':'Sergey', 'last_name':'Sergeev', 'email':'Sergeev@mail.ru'}
         self.data_put = {'username': 'Nikolay', 'first_name': 'Nikolay', 'last_name': 'Nikoleev', 'email': 'Nikoleev@mail.ru'}
+        self.url = '/api/users'
     def test_get_list(self):
-        pass
+        factory = APIRequestFactory()
+
+        request = factory.get(self.url)
+        view = UserCustomViewSet.as_view({'get':'list'})
+        response = view(request)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
     def tearDown(self)->None:
         pass

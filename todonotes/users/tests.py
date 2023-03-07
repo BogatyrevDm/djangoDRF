@@ -15,7 +15,7 @@ class TestUserViewSet(TestCase):
         self.email = 'admin_123@mail.ru'
         self.data = {'username':'Sergey', 'first_name':'Sergey', 'last_name':'Sergeev', 'email':'Sergeev@mail.ru'}
         self.data_put = {'username': 'Nikolay', 'first_name': 'Nikolay', 'last_name': 'Nikoleev', 'email': 'Nikoleev@mail.ru'}
-        self.url = '/api/users'
+        self.url = '/api/users/'
     def test_get_list(self):
         factory = APIRequestFactory()
 
@@ -24,5 +24,17 @@ class TestUserViewSet(TestCase):
         response = view(request)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_detail(self):
+        client = APIClient()
+        user = User.objects.create(**self.data)
+        response = client.get(f'{self.url}{user.id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_create_user(self):
+        client = APIClient()
+        user = User.objects.create(**self.data)
+        response = client.put(f'{self.url}{user.id}/', self.data_put)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
     def tearDown(self)->None:
         pass

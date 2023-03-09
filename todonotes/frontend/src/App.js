@@ -64,12 +64,12 @@ class App extends React.Component {
 
     set_token(token){
         const cookies = new Cookies()
-        cookies.set(token)
-        this.setState({'token':token}, ()=>this.load_data())
+        cookies.set('token', token)
+        this.setState({'token':token}, ()=>this.load_data)
     }
 
     get_token(username, password){
-        axios.get('http://127.0.0.1:8000/api/api-token-auth/', {'username':username, password:password})
+        axios.post('http://127.0.0.1:8000/api-token-auth/', {'username':username, 'password':password})
             .then(response => {
                 this.set_token(response.data['token'])
             }).catch(error => alert('Login or password is wrong!'))
